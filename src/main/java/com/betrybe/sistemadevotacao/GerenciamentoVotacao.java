@@ -30,10 +30,9 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
         System.out.println("Número da pessoa candidata já utilizado!");
         return;
       }
-      PessoaCandidata newPersonCandidate = new PessoaCandidata(nome, numero);
-      this.pessoasCandidatas.add(newPersonCandidate);
-
     }
+    PessoaCandidata newPersonCandidate = new PessoaCandidata(nome, numero);
+    this.pessoasCandidatas.add(newPersonCandidate);
 
   }
 
@@ -44,10 +43,9 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
         System.out.println("Pessoa eleitora já cadastrada!");
         return;
       }
-      PessoaEleitora newPersonVoter = new PessoaEleitora(nome, cpf);
-      this.pessoasEleitoras.add(newPersonVoter);
-
     }
+    PessoaEleitora newPersonVoter = new PessoaEleitora(nome, cpf);
+    this.pessoasEleitoras.add(newPersonVoter);
   }
 
   @Override
