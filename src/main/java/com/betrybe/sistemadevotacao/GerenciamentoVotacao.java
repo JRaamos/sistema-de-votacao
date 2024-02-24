@@ -10,9 +10,9 @@ import java.util.Objects;
  */
 public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
 
-  private ArrayList<PessoaCandidata> pessoasCandidatas;
-  private ArrayList<PessoaEleitora> pessoasEleitoras;
-  private ArrayList<String> cpfsComputados;
+  private final ArrayList<PessoaCandidata> pessoasCandidatas;
+  private final ArrayList<PessoaEleitora> pessoasEleitoras;
+  private final ArrayList<String> cpfsComputados;
 
   /**
   * Constructor com instacias das listas dos objetos.
@@ -50,11 +50,40 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
 
   @Override
   public void votar(String cpfPessoaEleitora, int numeroPessoaCandidata) {
+    for (String cpfEleitor : this.cpfsComputados) {
+      if (cpfEleitor.equals(cpfPessoaEleitora)) {
+        System.out.println("Pessoa eleitora já votou!");
+        return;
+      }
+    }
+    for (PessoaCandidata candidata : pessoasCandidatas) {
+      if (candidata.getNumero() == numeroPessoaCandidata) {
+        candidata.receberVoto();
+        this.cpfsComputados.add(cpfPessoaEleitora);
+      }
+    }
 
   }
 
   @Override
   public void mostrarResultado() {
+    if (this.cpfsComputados.isEmpty()) {
+      System.out.println("É preciso ter pelo menos um voto para mostrar o resultado.");
+      return;
+    }
 
+    int totalVotos = 0;
+    for (PessoaCandidata candidata : pessoasCandidatas) {
+      totalVotos += candidata.getVotos();
+    }
+
+    for (PessoaCandidata candidata : pessoasCandidatas) {
+      int votosCandidato = candidata.getVotos();
+      double percentual = (double) votosCandidato / totalVotos * 100;
+      System.out.println("Nome: " + candidata.getNome() + " - " + votosCandidato
+          + " votos ( " + Math.round(percentual) + "% )");
+    }
+    System.out.println("Total de votos: " + totalVotos);
   }
+
 }
